@@ -7,7 +7,6 @@ import os
 
 
 NUMBERS_CACHE_FILE = './agent_numbers_cache.csv'
-numbers_memcache = set()
 
 
 def clean_number(unclean_number: str):
@@ -29,16 +28,21 @@ def argsparser():
         parser.print_help()
         exit()
 
-def send_ws():
-    pywhatkit.sendwhatmsg_instantly("+12345124", "Hello", tab_close=False)
+def send_ws(args):
+    print(args)
+    number, author, link, prop_name, price = args
+    msg = MESSAGE + f'\nI am interested for your listing: {link} for ${price} a month.\nIs it available?'
+    pywhatkit.sendwhatmsg_instantly(number, msg, 8, tab_close=True)
+    print(number, author, link, prop_name, price)
 
 def main():
     if os.path.exists(FILE):
         df = pd.read_csv(FILE, converters={'AgentNumber': str})
-        df['AgentNumber'] = df['AgentNumber'].apply(clean_number)
-        print(df.head())
-
-        send_ws()
+        df['AgentNumber'] = df['AgentNumber'].copy().apply(clean_number)
+        
+        infoDf = df[['AgentNumber', 'Author', 'Link', 'PropertyName', 'Price']].copy()
+        print(infoDf.head())
+        infoDf.apply(send_ws, axis='columns')
     
     else:
         print('error encountered')

@@ -55,7 +55,7 @@ state = {
 allKeys = [key for key in state.keys()]
 all = f'{"".join([f"&district_code[]={key}" for key in allKeys])}&freetext={"".join(f"{state[key]}," for key in allKeys)}'
 # "D03", "D04", "D05", "D10", "D21"
-westKeys = ["D03"]
+westKeys = ["D21"]
 west = f'{"".join([f"&district_code[]={key}" for key in westKeys])}&freetext={"".join(f"{state[key]}," for key in westKeys)}'
 
 def BSPrep(URL):
