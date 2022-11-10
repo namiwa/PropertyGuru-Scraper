@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# SG related-ignores
+# since it can store somewhat sensitive data, will not be pushing data folders
+/sg/data/
+/sg/md5hash/
+PyWhatKit_DB.txt
