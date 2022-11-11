@@ -1,4 +1,5 @@
 import argparse
+import time
 import numpy as np
 import pandas as pd
 import phonenumbers
@@ -34,6 +35,7 @@ def send_ws(args):
     msg = MESSAGE + f'\nI am interested for your listing: {link} for ${price} a month.\nIs it available?'
     pywhatkit.sendwhatmsg_instantly(number, msg, 8, tab_close=True)
     print(number, author, link, prop_name, price)
+    time.sleep(1)
 
 def main():
     if os.path.exists(FILE):
@@ -42,7 +44,8 @@ def main():
         
         infoDf = df[['AgentNumber', 'Author', 'Link', 'PropertyName', 'Price']].copy()
         print(infoDf.head())
-        infoDf.apply(send_ws, axis='columns')
+        for val in infoDf.values:
+          send_ws(val)
     
     else:
         print('error encountered')
