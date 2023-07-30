@@ -133,3 +133,4 @@ dmypy.json
 /sg/data/
 /sg/md5hash/
 PyWhatKit_DB.txt
+.DS_Store

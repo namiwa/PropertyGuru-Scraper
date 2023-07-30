@@ -55,7 +55,7 @@ state = {
 allKeys = [key for key in state.keys()]
 all = f'{"".join([f"&district_code[]={key}" for key in allKeys])}&freetext={"".join(f"{state[key]}," for key in allKeys)}'
 # areas near west (NUS) "D03", "D04", "D05", "D10", "D21"
-westKeys = ["D05"]
+westKeys = ["D03", "D04", "D05", "D10", "D21"]
 west = f'{"".join([f"&district_code[]={key}" for key in westKeys])}&freetext={"".join(f"{state[key]}," for key in westKeys)}'
 
 def BSPrep(URL):
@@ -209,7 +209,8 @@ def argparser():
     try:
         parser.add_argument('-m', '--market', default=MARKET, dest='Market', help='eg. Residential, Commercial etc. (default: Condo)')
         parser.add_argument('-t', '--type', default=TYPE, dest='Type', help='eg. Condo, Terrace, etc. (default: condo)')
-        parser.add_argument('-mp', '--maxPrice', default='1500', dest='MaxPrice', help='eg. max price considering for rent')
+        parser.add_argument('-maxp', '--maxPrice', default='3500', dest='MaxPrice', help='eg. maximum price considered for rent')
+        parser.add_argument('-minp', '--minPrice', default='2500', dest='MinPrice', help='eg. minimum price considered for rent')
         parser.add_argument('-w', '--west', default=True, dest="West", help='eg. indicate whether west district is filtered')
         parser.add_argument('-k', '--key', dest="Token", help='Required api token from crawlbase')
         args = parser.parse_args()
@@ -308,7 +309,7 @@ if __name__ == "__main__":
 
     # Initialize arguments
     args = argparser()
-    MARKET, TYPE, MAXPRICE, WEST, TOKEN = args.Market, args.Type, args.MaxPrice, args.West, args.Token
+    MARKET, TYPE, MAXPRICE, MINPRICE, WEST, TOKEN = args.Market, args.Type, args.MaxPrice, args.MinPrice, args.West, args.Token
     districts = "".join(westKeys) if WEST else "-".join(allKeys)
     # Initialize filenames (leave empty if not generating)
     LIST_DIR = './data/{}'.format(date.today().strftime("%b%Y"))
@@ -318,7 +319,7 @@ if __name__ == "__main__":
 
     # Initialize URL
     HEADER = 'https://www.propertyguru.com.sg/'
-    QUERY = '?market='+MARKET.lower()+f'&listing_type{TYPE}'+'&search=true'+f'&maxprice={MAXPRICE}'
+    QUERY = '?market='+MARKET.lower()+f'&listing_type{TYPE}'+'&search=true'+f'&maxprice={MAXPRICE}&minprice={MINPRICE}'
     if (WEST):
         QUERY = QUERY + west
     else:

@@ -11,19 +11,21 @@
 ```python
 westKeys = ["D21"] # line 58 of data-scraper-rent-sg.py
 ```
-- run the following command, in the sg folder: `python data-scraper-rent-sg.py -m residential -t rent -mp <MAX-PRICE> -w 1 -k <CRAWLBASE-TOKEN>`
+- run the following command, in the sg folder: `python data-scraper-rent-sg.py -m residential -t rent -maxp <MAX-PRICE> -minp <MIN-PRICE> -w 1 -k <CRAWLBASE-TOKEN>`
 - help output 
 ```shell
 (propgruru-22) namiwa/sg:[git:main] ~python data-scraper-rent-sg.py -h
-usage: data-scraper-rent-sg.py [-h] [-m MARKET] [-t TYPE] [-mp MAXPRICE] [-w WEST] [-k TOKEN]
+usage: data-scraper-rent-sg.py [-h] [-m MARKET] [-t TYPE] [-maxp MAXPRICE] [-minp MINPRICE] [-w WEST] [-k TOKEN]
 
 options:
   -h, --help            show this help message and exit
   -m MARKET, --market MARKET
                         eg. Residential, Commercial etc. (default: Condo)
   -t TYPE, --type TYPE  eg. Condo, Terrace, etc. (default: condo)
-  -mp MAXPRICE, --maxPrice MAXPRICE
-                        eg. max price considering for rent
+  -maxp MAXPRICE, --maxPrice MAXPRICE
+                        eg. maximum price considered for rent
+  -minp MINPRICE, --minPrice MINPRICE
+                        eg. minimum price considered for rent
   -w WEST, --west WEST  eg. indicate whether west district is filtered
   -k TOKEN, --key TOKEN
                         Required api token from crawlbase
